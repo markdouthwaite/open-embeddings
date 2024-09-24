@@ -1,0 +1,6 @@
+supabase
+sqlalchemy
+pgvector
+sentence-transformers
+sqlmodel
+psycopg2
