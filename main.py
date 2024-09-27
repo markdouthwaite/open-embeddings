@@ -1,14 +1,13 @@
-from src.commands.publish import publish
-from src.embeddings import document
-from src.models.document import Document
-from src.db.postgres import PostgresDocumentRepository, PostgresEmbeddingRepository
+from fastapi import FastAPI
+from app.api.v1.routes import documents, embeddings, search
 
-DB_STRING = "postgresql://postgres.xoqpqicateftkqglhuoi:zHIKAZOsaSB8h4YV@aws-0-eu-west-2.pooler.supabase.com:6543/postgres"
+app = FastAPI(
+    title="An Open Embeddings API",
+    description="An API for managing document retrieval for RAG applications",
+    version="0.0.1",
+    docs_url="/docs",
+)
 
-model = document.init_embedding_model("all-MiniLM-L6-v2")
-
-with open("data/samples/blog.md") as file:
-    doc = Document(content=file.read())
-
-docs = PostgresDocumentRepository(DB_STRING)
-embeds = PostgresEmbeddingRepository(DB_STRING)
+app.include_router(documents.router, prefix="/api/v1/documents", tags=["Documents"])
+app.include_router(embeddings.router, prefix="/api/v1/embeddings", tags=["Embeddings"])
+app.include_router(search.router, prefix="/api/v1/search", tags=["Search"])

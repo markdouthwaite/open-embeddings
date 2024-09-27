@@ -1,6 +1,8 @@
-supabase
 sqlalchemy
 pgvector
 sentence-transformers
 sqlmodel
 psycopg2
+fire
+fastapi
+uvicorn

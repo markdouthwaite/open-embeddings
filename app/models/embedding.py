@@ -1,5 +1,5 @@
 import uuid
-from typing import Callable, Any, Dict
+from typing import Callable, Any, Dict, Optional
 from numpy import ndarray
 from sqlmodel import Field, SQLModel
 from sqlalchemy import Column, JSON
@@ -11,7 +11,7 @@ EmbeddingModel = Callable[[str], ndarray]
 
 class Embedding(SQLModel, table=True):
     id: str = Field(default_factory=lambda: uuid.uuid4().hex, primary_key=True)
-    doc_id: str
+    doc_id: Optional[str]
     chunk: str
     vector: Any = Field(sa_column=Column(Vector(384)))
     meta: Dict = Field(default_factory=dict, sa_column=Column(JSON))
